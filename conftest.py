@@ -2,7 +2,7 @@ import pytest
 import os
 from zipfile import ZipFile
 import shutil
-from constant import *
+from constants import *
 
 @pytest.fixture(scope="function", autouse=True)
 def create_archive():

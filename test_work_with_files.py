@@ -3,7 +3,7 @@ from zipfile import ZipFile
 import csv
 from pypdf import PdfReader
 from openpyxl import load_workbook
-from constant import *
+from constants import *
 
 def test_archive_csv():
     with ZipFile(ARCHIVE) as zf:
