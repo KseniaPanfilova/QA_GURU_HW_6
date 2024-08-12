@@ -3,16 +3,9 @@ from zipfile import ZipFile
 import csv
 from pypdf import PdfReader
 from openpyxl import load_workbook
+from constant import *
 
-TMP_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tmp')
-ARCHIVE = os.path.join(TMP_DIR, 'archive.zip')
-FILES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'files')
-files = ['file_example_XLSX_1000.xlsx', 'industry.csv', 'Тест план. Интернет-магазин скрыто.pdf']
-
-
-def test_archive():
-
-    # test csv
+def test_archive_csv():
     with ZipFile(ARCHIVE) as zf:
         with zf.open('industry.csv') as csv_file:
             content = csv_file.read().decode()
@@ -21,16 +14,18 @@ def test_archive():
 
             assert first_row[0] == 'Accounting/Finance'
 
-    # test pdf
+
+def test_archive_pdf():
     with ZipFile(ARCHIVE) as zf:
-        with zf.open('Тест план. Интернет-магазин скрыто.pdf') as pdf_file:
+        with zf.open('Журнал аудита.pdf') as pdf_file:
             content = PdfReader(pdf_file)
-            page = content.pages[1]
+            page = content.pages[0]
             text = page.extract_text()
 
-            assert 'История изменений' in text
+            assert 'Последнее событие' in text
 
-    # test xlsx
+
+def test_archive_xlsx():
     with ZipFile(ARCHIVE) as zf:
         with zf.open('file_example_XLSX_1000.xlsx') as xlsx_file:
             workbook = load_workbook(xlsx_file)
