@@ -4,6 +4,7 @@ from pypdf import PdfReader
 from openpyxl import load_workbook
 from constants import *
 
+
 def test_archive_csv():
     with ZipFile(ARCHIVE) as zf:
         with zf.open('industry.csv') as csv_file:
